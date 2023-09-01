@@ -2,7 +2,6 @@ import discord
 import openai
 from discord.ext import commands
 import logging
-# from discord_slash import SlashCommand
 import os
 from dotenv import load_dotenv
 
@@ -18,7 +17,6 @@ intents.message_content = True
 
 # Initialize Poof Poof
 bot = commands.Bot(command_prefix=commands.when_mentioned_or('!'), intents=intents)
-# slash = SlashCommand(bot, sync_commands=True)
 
 # Set the OpenAI API key from environment variable
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -46,7 +44,6 @@ async def run_bot():
     try:
         # Load the AskCog from commands
         await bot.load_extension('commands.ask')
-        await bot.load_extension('commands.dihia')
 
     except Exception as e:
         print(f"Error loading extension: {e}")
