@@ -3,12 +3,12 @@ import openai
 import requests
 from discord.ext import commands
 
-class HhCog(commands.Cog):
+class CentCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
-    async def hh(self, ctx, *, user_query):
+    async def cent(self, ctx, *, user_query):
         print("Command received:", user_query)
         # Set the system prompt
         system_prompt = """
@@ -50,4 +50,4 @@ class HhCog(commands.Cog):
             print(f"Error sending message: {e}")
 
 async def setup(bot):
-    await bot.add_cog(HhCog(bot))
+    await bot.add_cog(CentCog(bot))
