@@ -42,8 +42,8 @@ async def on_message(message):
 
 async def run_bot():
     try:
-        # Load the AskCog from commands
-        await bot.load_extension('commands.ask')
+        # Load the HhCog from commands
+        await bot.load_extension('commands.hh')
 
     except Exception as e:
         print(f"Error loading extension: {e}")
