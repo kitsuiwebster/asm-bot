@@ -43,6 +43,7 @@ class AsmCog(commands.Cog):
                 await ctx.send("Aïe, je reçois trop de requêtes, réessaye 🤕")
             else:
                 print(f"Error: API returned status code {response.status_code}")
+                await ctx.send(f"Erreur code {response.status_code}, veuillez contacter @kitsuiwebster sur Discord.")
 
     def get_response(self, headers, data):
         response = requests.post(
