@@ -23,7 +23,8 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @bot.event
 async def on_ready():
-    print(f'Logged in as {bot.user.name}')
+    print(f'{bot.user.name} is connected !!')
+    bot.heartbeat_interval = 360
 
 @bot.event
 async def on_message(message):
@@ -40,10 +41,25 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
+# Change the status every 10s
+async def change_status():
+    await bot.wait_until_ready()
+
+    while not bot.is_closed():
+        statuses = [
+            discord.Game("!cmd"),
+            discord.Game("ASM Bot"),
+        ]
+
+        for status in statuses:
+            await bot.change_presence(activity=status)
+            await asyncio.sleep(10)
+
 async def run_bot():
     try:
         # Load the HhCog from commands
         await bot.load_extension('commands.cent')
+        await bot.load_extension('commands.asm')
 
     except Exception as e:
         print(f"Error loading extension: {e}")
