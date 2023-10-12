@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
-
 logging.basicConfig(level=logging.INFO)
 
 # Define the intents you need for your bot
@@ -16,7 +15,7 @@ intents.typing = False
 intents.message_content = True  
 
 # Initialize Poof Poof
-bot = commands.Bot(command_prefix=commands.when_mentioned_or('!'), intents=intents)
+bot = commands.Bot(command_prefix="/", intents=intents)
 
 # Set the OpenAI API key from environment variable
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -57,9 +56,7 @@ async def change_status():
 
 async def run_bot():
     try:
-        # Load the HhCog from commands
-        await bot.load_extension('commands.cent')
-        await bot.load_extension('commands.asm')
+        bot.load_extension('commands.asm')
 
     except Exception as e:
         print(f"Error loading extension: {e}")

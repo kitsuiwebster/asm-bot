@@ -10,9 +10,13 @@ class AsmCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.slash_command(name="asm", description="ASM Bot répond à ta question sur l'ASM ou la mémoire")
     async def asm(self, ctx, *, user_query):
-        print("Command received:", user_query)
+        print(":", user_query)
+        
+        # Send a message in the text channel where the command was invoked
+        await ctx.respond(f"{ctx.author.mention} a demandé: {user_query}")
+
         system_prompt = prompt
         headers = {
             "Content-Type": "application/json",
@@ -36,7 +40,10 @@ class AsmCog(commands.Cog):
             if response.status_code == 200:
                 response_json = response.json()
                 try:
-                    await send_large_message(ctx, response_json["choices"][0]["message"]["content"])
+                    response_message = response_json["choices"][0]["message"]["content"]
+                    await send_large_message(ctx, response_message)
+                    print("Completion:---------------------------------------------------------------------\n", response_message)
+                    print("Full API Response:--------------------------------------------------------------\n", json.dumps(response_json, indent=2))
                 except Exception as e:
                     print(f"Error sending message: {e}")
             elif response.status_code == 429:
@@ -71,5 +78,5 @@ async def send_large_message(ctx, message):
     for part in message_parts:
         await ctx.send(part)
 
-async def setup(bot):
-    await bot.add_cog(AsmCog(bot))
+def setup(bot):
+    bot.add_cog(AsmCog(bot))
