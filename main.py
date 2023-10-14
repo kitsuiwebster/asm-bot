@@ -3,6 +3,7 @@ import openai
 from discord.ext import commands
 import logging
 import os
+import asyncio
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -14,7 +15,7 @@ intents = discord.Intents.default()
 intents.typing = False 
 intents.message_content = True  
 
-# Initialize Poof Poof
+# Initialize ASM Bot
 bot = commands.Bot(command_prefix="/", intents=intents)
 
 # Set the OpenAI API key from environment variable
@@ -65,9 +66,10 @@ async def run_bot():
     bot_token = os.getenv("DISCORD_BOT_TOKEN")
     await bot.start(bot_token)
 
+    asyncio.ensure_future(change_status())
+
 
 if __name__ == "__main__":
-    import asyncio
     loop = asyncio.get_event_loop()
 
     try:
